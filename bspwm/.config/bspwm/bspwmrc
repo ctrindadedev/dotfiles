@@ -1,0 +1,38 @@
+#! /bin/sh
+
+# 1. Configuração de Monitores (Liga a tela do notebook e coloca o HDMI à direita)
+xrandr --output eDP --primary --mode 1920x1080 --pos 0x0 --output HDMI-A-0 --mode 1920x1080 --pos 1920x0
+
+# 2. Inicia o teclado 
+pgrep -x sxhkd > /dev/null || sxhkd &
+
+# 3. Espaços de trabalho (Divide 5 telas pro notebook e 5 pro HDMI)
+bspc monitor eDP -d 1 2 3 4 5
+bspc monitor HDMI-A-0 -d 6 7 8 9 10
+
+
+bspc rule -a "mpv:mpv-bg-edp" monitor=eDP state=floating layer=below border=off focus=off locked=true sticky=true
+bspc rule -a "mpv:mpv-bg-hdmi" monitor=HDMI-A-0 state=floating layer=below border=off focus=off locked=true sticky=true
+
+# Configurações visuais do bspwm
+bspc config border_width         2
+bspc config window_gap          12
+bspc config split_ratio          0.52
+bspc config borderless_monocle   true
+bspc config gapless_monocle      true
+
+# 4. Bandeja do Sistema
+killall -q nm-applet flameshot nemo-desktop
+nm-applet &
+flameshot &
+
+# 5. Polybar
+~/.config/polybar/launch.sh &
+
+# 6. Picom (Transparências e Bordas)
+killall -q picom
+picom -b &
+
+# 7. Wallpaper (Imagem estática)
+feh --bg-fill ~/Downloads/Wallpapers/drag_walp.jpg &
+
