@@ -83,7 +83,7 @@ super + {o,i}
 
 # focus or send to the given desktop
 super + {_,shift + }{1-9,0}
-	bspc {desktop -f,node -d} '^{1-9,10}'
+	bspc {desktop -f,node -d} '{1-9,10}'
 
 #
 # preselect
@@ -131,29 +131,33 @@ super + d
 
 # --- Controle de Volume (Teclas de Mídia) ---
 XF86AudioRaiseVolume
-    pactl set-sink-volume @DEFAULT_SINK@ +5%
+    ~/.local/bin/osd volume up
 
 XF86AudioLowerVolume
-    pactl set-sink-volume @DEFAULT_SINK@ -5%
+    ~/.local/bin/osd volume down
 
 XF86AudioMute
-    pactl set-sink-mute @DEFAULT_SINK@ toggle
+    ~/.local/bin/osd volume mute
 
 # --- Controle de Brilho (Teclas do Notebook) ---
 XF86MonBrightnessUp
-    brightnessctl set +5%
+    ~/.local/bin/osd brightness up
 
 XF86MonBrightnessDown
-    brightnessctl set 5%-
+    ~/.local/bin/osd brightness down
 
 # --- Filtro de Luz Azul (Super + N de "Night") ---
 super + n
     sh -c 'if pgrep -x redshift > /dev/null; then killall -q redshift; sleep 0.2; redshift -x; else redshift -l -5.79:-35.20 -t 3500:3500 -r & fi'
 
+# Menu de telas (tecla de projetor do notebook ou Super + F9)
+{XF86Display,super + F9}
+    ~/.local/bin/display-menu
+
 # Espelhar tela
 super + F7
-    xrandr --output eDP --auto --output HDMI-A-0 --auto --same-as eDP
+    ~/.local/bin/display-menu mirror
 
 # Estender Telas (Universal - Joga o HDMI para a direita automaticamente)
 super + F8
-    xrandr --output eDP --auto --output HDMI-A-0 --auto --right-of eDP
+    ~/.local/bin/display-menu extend

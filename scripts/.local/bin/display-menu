@@ -1,0 +1,63 @@
+#!/bin/sh
+# Menu de monitores (tecla de projetor / Super+F9).
+# Uso: display-menu            -> abre o menu no rofi
+#      display-menu <modo>     -> mirror | extend | laptop | external
+#      display-menu --fix      -> só reorganiza desktops do bspwm e a polybar
+
+INT=eDP
+EXT=HDMI-A-0
+
+ext_connected() { xrandr --query | grep -q "^$EXT connected"; }
+
+# Desktops 1-5 no notebook, 6-10 no externo (ou todos no notebook se só houver ele)
+fix_desktops() {
+    mons=$(bspc query -M --names)
+    first=$(echo "$mons" | head -1)
+    for d in 1 2 3 4 5 6 7 8 9 10; do
+        bspc query -D -d "$d" >/dev/null 2>&1 || bspc monitor "$first" -a "$d"
+    done
+    has() { echo "$mons" | grep -qx "$1"; }
+    has "$INT" && for d in 1 2 3 4 5;  do bspc desktop "$d" -m "$INT" 2>/dev/null; done
+    has "$EXT" && for d in 6 7 8 9 10; do bspc desktop "$d" -m "$EXT" 2>/dev/null; done
+    # Com um monitor só, todos os desktops vão pra ele
+    if [ "$(echo "$mons" | wc -l)" -eq 1 ]; then
+        for d in 1 2 3 4 5 6 7 8 9 10; do bspc desktop "$d" -m "$first" 2>/dev/null; done
+    fi
+    # bspwm cria um desktop "Desktop" em monitor novo; remove os vazios
+    while bspc desktop 'Desktop.!occupied' -r 2>/dev/null; do :; done
+    for m in $(bspc query -M --names); do
+        bspc monitor "$m" -o $(bspc query -D -m "$m" --names | sort -n)
+    done
+    ~/.config/polybar/launch.sh >/dev/null 2>&1 &
+}
+
+apply() {
+    if [ "$1" != laptop ] && ! ext_connected; then
+        notify-send -u normal -i video-display "Monitor externo não detectado" "Usando só a tela do notebook"
+        set -- laptop
+    fi
+    case "$1" in
+        mirror)   xrandr --output "$INT" --auto --primary --output "$EXT" --auto --same-as "$INT" ;;
+        extend)   xrandr --output "$INT" --auto --primary --output "$EXT" --auto --right-of "$INT" ;;
+        laptop)   xrandr --output "$INT" --auto --primary --output "$EXT" --off ;;
+        external) xrandr --output "$EXT" --auto --primary --output "$INT" --off ;;
+        *) exit 1 ;;
+    esac
+    sleep 0.5
+    fix_desktops
+}
+
+case "$1" in
+    --fix) fix_desktops ;;
+    "")
+        choice=$(printf '󰍺  Espelhar\n󰍹  Estender\n󰌢  Só notebook\n󰶐  Só monitor externo\n' |
+            rofi -dmenu -i -p "Tela" -theme ~/.config/rofi/launchers/type-1/style-5.rasi) || exit 0
+        case "$choice" in
+            *Espelhar*) apply mirror ;;
+            *Estender*) apply extend ;;
+            *notebook*) apply laptop ;;
+            *externo*)  apply external ;;
+        esac
+        ;;
+    *) apply "$1" ;;
+esac
