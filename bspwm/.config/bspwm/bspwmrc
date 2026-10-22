@@ -10,10 +10,6 @@ pgrep -x sxhkd > /dev/null || sxhkd &
 bspc monitor eDP -d 1 2 3 4 5
 bspc monitor HDMI-A-0 -d 6 7 8 9 10
 
-
-bspc rule -a "mpv:mpv-bg-edp" monitor=eDP state=floating layer=below border=off focus=off locked=true sticky=true
-bspc rule -a "mpv:mpv-bg-hdmi" monitor=HDMI-A-0 state=floating layer=below border=off focus=off locked=true sticky=true
-
 # Configurações visuais do bspwm
 bspc config border_width         2
 bspc config window_gap          12
@@ -22,9 +18,11 @@ bspc config borderless_monocle   true
 bspc config gapless_monocle      true
 
 # 4. Bandeja do Sistema
-killall -q nm-applet flameshot nemo-desktop
+killall -q nm-applet flameshot pasystray
+/usr/lib/policykit-1-gnome/polkit-gnome-authentication-agent-1 &
 nm-applet &
 flameshot &
+pasystray &
 
 # 5. Polybar
 ~/.config/polybar/launch.sh &
@@ -36,3 +34,7 @@ picom -b &
 # 7. Wallpaper (Imagem estática)
 feh --bg-fill ~/Downloads/Wallpapers/drag_walp.jpg &
 
+# Regras para a Steam e Jogos
+bspc rule -a Steam state=floating
+bspc rule -a "steam_app_*" state=fullscreen
+bspc rule -a "gamescope" state=fullscreen

@@ -123,3 +123,37 @@ super + {Left,Down,Up,Right}
 #abre o menu de aplicativos do rofi
 super + d
     ~/.config/rofi/launcher.sh
+
+
+# ==========================================
+# HARDWARE E CONTROLES (Volume, Brilho e Tela)
+# ==========================================
+
+# --- Controle de Volume (Teclas de Mídia) ---
+XF86AudioRaiseVolume
+    pactl set-sink-volume @DEFAULT_SINK@ +5%
+
+XF86AudioLowerVolume
+    pactl set-sink-volume @DEFAULT_SINK@ -5%
+
+XF86AudioMute
+    pactl set-sink-mute @DEFAULT_SINK@ toggle
+
+# --- Controle de Brilho (Teclas do Notebook) ---
+XF86MonBrightnessUp
+    brightnessctl set +5%
+
+XF86MonBrightnessDown
+    brightnessctl set 5%-
+
+# --- Filtro de Luz Azul (Super + N de "Night") ---
+super + n
+    sh -c 'if pgrep -x redshift > /dev/null; then killall -q redshift; sleep 0.2; redshift -x; else redshift -l -5.79:-35.20 -t 3500:3500 -r & fi'
+
+# Espelhar tela
+super + F7
+    xrandr --output eDP --auto --output HDMI-A-0 --auto --same-as eDP
+
+# Estender Telas (Universal - Joga o HDMI para a direita automaticamente)
+super + F8
+    xrandr --output eDP --auto --output HDMI-A-0 --auto --right-of eDP
