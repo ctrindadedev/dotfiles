@@ -1,0 +1,9 @@
+{
+  "log-driver": "local",
+  "builder": {
+    "gc": {
+      "enabled": true,
+      "defaultKeepStorage": "20GB"
+    }
+  }
+}
