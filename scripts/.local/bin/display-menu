@@ -31,6 +31,8 @@ fix_desktops() {
     ~/.config/polybar/launch.sh >/dev/null 2>&1 &
     # Reaplica o wallpaper pra cobrir a área nova (monitor ligado/desligado)
     [ -x ~/.fehbg ] && ~/.fehbg &
+    # O xrandr zera a cor da tela; reaplica a luz noturna se estiver ligada
+    [ -e "${XDG_RUNTIME_DIR:-/tmp}/night-on" ] && redshift -P -O 3500 >/dev/null 2>&1 &
 }
 
 apply() {

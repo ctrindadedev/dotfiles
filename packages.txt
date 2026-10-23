@@ -13,9 +13,8 @@ kitty
 stow
 x11-xserver-utils
 
-# Bloqueio de tela
+# Bloqueio de tela (manual)
 i3lock
-xss-lock
 
 # Bandeja, energia e permissões
 network-manager-gnome

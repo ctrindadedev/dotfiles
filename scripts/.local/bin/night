@@ -1,6 +1,18 @@
 #!/bin/sh
 # Luz noturna (Super + N): cor fixa 3500K, sem deixar processo rodando
+# Uso: night        -> liga/desliga
+#      night status -> ícone pra polybar (roxo ligada, apagado desligada)
 state="${XDG_RUNTIME_DIR:-/tmp}/night-on"
+if [ "$1" = status ]; then
+    if [ -e "$state" ]; then echo "%{F#CBA6F7}󰖔%{F-}"; else echo "%{F#7F849C}󰖔%{F-}"; fi
+    exit 0
+fi
+# Segurar Super + N repete a tecla e alternaria várias vezes: ignora toques a menos de 1s do último
+stamp="${XDG_RUNTIME_DIR:-/tmp}/night-stamp"
+now=$(date +%s%N)
+[ -e "$stamp" ] && [ $((now - $(cat "$stamp"))) -lt 1000000000 ] && exit 0
+echo "$now" > "$stamp"
+
 if [ -e "$state" ]; then
     redshift -x >/dev/null 2>&1
     rm -f "$state"
@@ -10,3 +22,4 @@ else
     touch "$state"
     notify-send -u low -i redshift-status-on -h string:x-dunst-stack-tag:osd "Luz noturna ligada" "" 2>/dev/null
 fi
+polybar-msg action night hook 0 >/dev/null 2>&1
