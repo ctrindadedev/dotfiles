@@ -7,14 +7,13 @@ bspc config merge_overlapping_monitors true
 bspc config remove_unplugged_monitors  true
 bspc config remove_disabled_monitors   true
 
-# Perfil salvo do autorandr se houver; senão estende pra direita quando o HDMI estiver plugado
-if ! { command -v autorandr >/dev/null && autorandr --change >/dev/null 2>&1; }; then
-    if xrandr --query | grep -q '^HDMI-A-0 connected'; then
-        xrandr --output eDP --primary --auto --output HDMI-A-0 --auto --right-of eDP
-    else
-        xrandr --output eDP --primary --auto --output HDMI-A-0 --off
-    fi
+# No boot: estende pra direita se o HDMI estiver plugado. Depois disso o hdmi-watch cuida
+if xrandr --query | grep -q '^HDMI-A-0 connected'; then
+    xrandr --output eDP --primary --auto --output HDMI-A-0 --auto --right-of eDP
+else
+    xrandr --output eDP --primary --auto --output HDMI-A-0 --off
 fi
+pgrep -x hdmi-watch > /dev/null || ~/.local/bin/hdmi-watch &
 
 # 2. Teclado
 pgrep -x sxhkd > /dev/null || sxhkd &
@@ -25,6 +24,7 @@ pgrep -x sxhkd > /dev/null || sxhkd &
 # Configurações visuais do bspwm
 bspc config border_width         2
 bspc config window_gap          12
+bspc config bottom_padding       8
 bspc config split_ratio          0.52
 bspc config borderless_monocle   true
 bspc config gapless_monocle      true
@@ -50,6 +50,9 @@ fi
 # 6. Picom (Transparências e Bordas)
 killall -q picom
 picom -b &
+
+# Dock (Plank)
+~/.local/bin/dock
 
 # 7. Wallpaper (Imagem estática)
 feh --bg-fill ~/Downloads/Wallpapers/drag_walp.jpg &

@@ -1,3 +1,0 @@
-#!/bin/sh
-# Roda depois que o autorandr troca de perfil (ex.: ao plugar/desplugar o HDMI)
-~/.local/bin/display-menu --fix

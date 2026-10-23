@@ -51,7 +51,7 @@ case "$1" in
     --fix) fix_desktops ;;
     "")
         choice=$(printf '󰍺  Espelhar\n󰍹  Estender\n󰌢  Só notebook\n󰶐  Só monitor externo\n' |
-            rofi -dmenu -i -p "Tela" -theme ~/.config/rofi/launchers/type-1/style-5.rasi) || exit 0
+            rofi -dmenu -i -p "Tela" -theme ~/.config/rofi/spotlight.rasi -theme-str 'listview { lines: 4; } entry { placeholder: "Telas"; }') || exit 0
         case "$choice" in
             *Espelhar*) apply mirror ;;
             *Estender*) apply extend ;;

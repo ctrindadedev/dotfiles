@@ -6,9 +6,9 @@
 super + Return
     kitty
 
-# program launcher
+# Busca estilo Spotlight
 super + @space
-	dmenu_run
+	rofi -show drun -theme ~/.config/rofi/spotlight.rasi
 
 # make sxhkd reload its configuration files:
 # Recarregar o bspwm e as teclas (Tudo de uma vez)

@@ -1,0 +1,13 @@
+#!/bin/sh
+# Menu do logo na barra (estilo menu da Apple)
+theme=~/.config/rofi/spotlight.rasi
+choice=$(printf '󰍹  Telas…\n󰒓  Som…\n󰤄  Suspender\n󰜉  Reiniciar\n󰐥  Desligar\n󰍃  Sair do bspwm\n' |
+    rofi -dmenu -i -p "" -theme "$theme" -theme-str 'listview { lines: 6; } entry { placeholder: "Sistema"; }') || exit 0
+case "$choice" in
+    *Telas*)     ~/.local/bin/display-menu ;;
+    *Som*)       pavucontrol ;;
+    *Suspender*) systemctl suspend ;;
+    *Reiniciar*) systemctl reboot ;;
+    *Desligar*)  systemctl poweroff ;;
+    *Sair*)      bspc quit ;;
+esac

@@ -1,0 +1,16 @@
+#!/bin/sh
+# Plank como Dock do macOS: embaixo, some quando uma janela encosta, zoom nos ícones
+command -v plank >/dev/null || exit 0
+s="gsettings set net.launchpad.plank.dock.settings:/net/launchpad/plank/docks/dock1/"
+$s position 'bottom'
+$s alignment 'center'
+$s hide-mode 'intelligent'
+$s hide-delay 300
+$s unhide-delay 0
+$s icon-size 44
+$s zoom-enabled true
+$s zoom-percent 150
+$s theme 'Transparent'
+$s show-dock-item false
+$s monitor ''
+pgrep -x plank >/dev/null || plank >/dev/null 2>&1 &

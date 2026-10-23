@@ -1,0 +1,85 @@
+/* Busca estilo Spotlight: caixa centralizada, translúcida e arredondada (Catppuccin Mocha) */
+configuration {
+    modi:                "drun,run,window";
+    show-icons:          true;
+    drun-display-format: "{name}";
+    display-drun:        "";
+    display-run:         "";
+    display-window:      "";
+}
+
+* {
+    font:             "Inter Medium 12";
+    bg:               #1E1E2EE0;
+    bg-alt:           #31324480;
+    fg:               #CDD6F4;
+    dim:              #7F849C;
+    accent:           #CBA6F7;
+    background-color: transparent;
+    text-color:       @fg;
+}
+
+window {
+    location:         north;
+    y-offset:         22%;
+    width:            640px;
+    border-radius:    16px;
+    border:           1px solid;
+    border-color:     #45475A;
+    background-color: @bg;
+    transparency:     "real";
+}
+
+mainbox {
+    padding:  10px;
+    spacing:  8px;
+    children: [ inputbar, listview ];
+}
+
+inputbar {
+    padding:  10px 12px;
+    spacing:  12px;
+    children: [ prompt, entry ];
+}
+
+prompt {
+    font:       "Symbols Nerd Font 16";
+    text-color: @dim;
+}
+
+entry {
+    font:              "Inter 18";
+    placeholder:       "Buscar";
+    placeholder-color: @dim;
+    cursor:            text;
+}
+
+listview {
+    lines:        7;
+    columns:      1;
+    fixed-height: false;
+    dynamic:      true;
+    scrollbar:    false;
+    spacing:      2px;
+}
+
+element {
+    padding:       8px 12px;
+    spacing:       12px;
+    border-radius: 10px;
+}
+
+element selected.normal {
+    background-color: @accent;
+    text-color:       #1E1E2E;
+}
+
+element-icon {
+    size:       28px;
+    text-color: inherit;
+}
+
+element-text {
+    vertical-align: 0.5;
+    text-color:     inherit;
+}
