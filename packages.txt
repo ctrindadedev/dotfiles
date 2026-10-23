@@ -1,0 +1,42 @@
+# Pacotes do apt (Linux Mint 22 / Ubuntu 24.04). Lidos pelo install.sh
+# Base
+bspwm
+sxhkd
+polybar
+rofi
+picom
+dunst
+libnotify-bin
+feh
+plank
+kitty
+stow
+x11-xserver-utils
+
+# Bloqueio de tela
+i3lock
+xss-lock
+
+# Bandeja, energia e permissões
+network-manager-gnome
+pasystray
+xfce4-power-manager
+xfconf
+policykit-1-gnome
+
+# Som, brilho, mídia e luz noturna
+pulseaudio-utils
+pavucontrol
+playerctl
+brightnessctl
+redshift
+
+# Prints
+flameshot
+
+# Fontes e gerador do wallpaper
+fonts-inter
+python3-numpy
+python3-pil
+curl
+unzip

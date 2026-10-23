@@ -29,6 +29,8 @@ fix_desktops() {
         bspc monitor "$m" -o $(bspc query -D -m "$m" --names | sort -n)
     done
     ~/.config/polybar/launch.sh >/dev/null 2>&1 &
+    # Reaplica o wallpaper pra cobrir a área nova (monitor ligado/desligado)
+    [ -x ~/.fehbg ] && ~/.fehbg &
 }
 
 apply() {

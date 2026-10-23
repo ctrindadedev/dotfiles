@@ -5,6 +5,10 @@ for n in $(bspc query -N -n .window); do
     bspc query -T -n "$n" | grep -q '"className":"scratchpad"' && { id=$n; break; }
 done
 if [ -z "$id" ]; then
+    # Centralizado no topo do monitor em foco (o bspwm adapta se ele mudar de monitor depois)
+    set -- $(bspc query -T -m | grep -o '"rectangle":{[^}]*}' | head -1 | grep -o '[0-9]\+')
+    w=$(($3 * 57 / 100)) h=$(($4 * 52 / 100))
+    bspc rule -a '*:scratchpad' -o rectangle=${w}x${h}+$(($1 + ($3 - w) / 2))+$(($2 + 40))
     kitty --class scratchpad --name scratchpad >/dev/null 2>&1 &
     exit 0
 fi

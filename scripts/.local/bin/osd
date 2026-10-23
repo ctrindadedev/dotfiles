@@ -1,6 +1,6 @@
 #!/bin/sh
 # Volume e brilho com feedback visual (dunst).
-# Uso: osd volume {up|down|mute} | osd brightness {up|down}
+# Uso: osd volume {up|down|mute} | osd mic | osd brightness {up|down}
 
 notify() { # $1 ícone, $2 título, $3 valor 0-100
     notify-send -u low -i "$1" -h string:x-dunst-stack-tag:osd -h "int:value:$3" "$2" "" 2>/dev/null
@@ -9,7 +9,10 @@ notify() { # $1 ícone, $2 título, $3 valor 0-100
 case "$1" in
     volume)
         case "$2" in
-            up)   pactl set-sink-mute @DEFAULT_SINK@ 0; pactl set-sink-volume @DEFAULT_SINK@ +5% ;;
+            up) # para em 100% (acima disso distorce)
+                pactl set-sink-mute @DEFAULT_SINK@ 0
+                cur=$(pactl get-sink-volume @DEFAULT_SINK@ | grep -o '[0-9]*%' | head -1 | tr -d %)
+                if [ "$cur" -ge 95 ]; then pactl set-sink-volume @DEFAULT_SINK@ 100%; else pactl set-sink-volume @DEFAULT_SINK@ +5%; fi ;;
             down) pactl set-sink-volume @DEFAULT_SINK@ -5% ;;
             mute) pactl set-sink-mute @DEFAULT_SINK@ toggle ;;
         esac
@@ -18,6 +21,14 @@ case "$1" in
             notify audio-volume-muted "Mudo" 0
         else
             notify audio-volume-high "Volume ${vol}%" "$vol"
+        fi
+        ;;
+    mic)
+        pactl set-source-mute @DEFAULT_SOURCE@ toggle
+        if pactl get-source-mute @DEFAULT_SOURCE@ | grep -q yes; then
+            notify microphone-sensitivity-muted "Microfone mudo" 0
+        else
+            notify microphone-sensitivity-high "Microfone ligado" 100
         fi
         ;;
     brightness)

@@ -7,13 +7,16 @@ bspc config merge_overlapping_monitors true
 bspc config remove_unplugged_monitors  true
 bspc config remove_disabled_monitors   true
 
-# No boot: estende pra direita se o HDMI estiver plugado. Depois disso o hdmi-watch cuida
-if xrandr --query | grep -q '^HDMI-A-0 connected'; then
-    xrandr --output eDP --primary --auto --output HDMI-A-0 --auto --right-of eDP
-else
-    xrandr --output eDP --primary --auto --output HDMI-A-0 --off
+# Só no boot (hdmi-watch ainda não rodando): estende pra direita se o HDMI estiver plugado.
+# Nos reloads não mexe no xrandr, pra não desfazer o modo escolhido no display-menu
+if ! pgrep -x hdmi-watch > /dev/null; then
+    if xrandr --query | grep -q '^HDMI-A-0 connected'; then
+        xrandr --output eDP --primary --auto --output HDMI-A-0 --auto --right-of eDP
+    else
+        xrandr --output eDP --primary --auto --output HDMI-A-0 --off
+    fi
+    ~/.local/bin/hdmi-watch &
 fi
-pgrep -x hdmi-watch > /dev/null || ~/.local/bin/hdmi-watch &
 
 # 2. Teclado
 pgrep -x sxhkd > /dev/null || sxhkd &
@@ -42,6 +45,8 @@ command -v dunst > /dev/null && { pgrep -x dunst > /dev/null || dunst & }
 # Bateria fraca, tampa e suspensão. As teclas de brilho ficam com o sxhkd (evita passo duplo)
 if command -v xfce4-power-manager > /dev/null; then
     xfconf-query -c xfce4-power-manager -p /xfce4-power-manager/handle-brightness-keys -n -t bool -s false 2>/dev/null
+    # Quem bloqueia ao suspender é o xss-lock (abaixo); sem isso os dois tentam
+    xfconf-query -c xfce4-power-manager -p /xfce4-power-manager/lock-screen-suspend-hibernate -n -t bool -s false 2>/dev/null
     pgrep -x xfce4-power-man > /dev/null || xfce4-power-manager &
 fi
 
@@ -55,8 +60,11 @@ command -v xss-lock > /dev/null && { pgrep -x xss-lock > /dev/null || xss-lock -
 # 5. Polybar: iniciada pelo display-menu --fix acima
 
 # 6. Picom (Transparências e Bordas)
-killall -q picom
-picom -b &
+# Espera o antigo sair (até 2s), senão o novo falha com "another compositor is running"
+pkill -x picom
+for _ in $(seq 20); do pgrep -x picom > /dev/null || break; sleep 0.1; done
+pkill -9 -x picom
+picom -b
 
 # Dock (Plank)
 ~/.local/bin/dock
@@ -70,4 +78,5 @@ bspc rule -a Steam state=floating
 bspc rule -a "steam_app_*" state=fullscreen
 bspc rule -a "gamescope" state=fullscreen
 bspc rule -a Plank manage=off border=off
-bspc rule -a '*:scratchpad' state=floating sticky=on rectangle=1100x560+410+40
+# Tamanho/posição do scratchpad: calculados no script scratch, conforme o monitor
+bspc rule -a '*:scratchpad' state=floating sticky=on

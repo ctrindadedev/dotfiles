@@ -19,9 +19,9 @@ super + Escape
 # bspwm hotkeys
 #
 
-# quit/restart bspwm
-super + alt + {q,r}
-	bspc {quit,wm -r}
+# restart bspwm (sair fica só no power-menu, longe do Super+Ctrl+Q de bloquear)
+super + alt + r
+	bspc wm -r
 
 # close and kill
 super + {_,shift + }w
@@ -138,6 +138,13 @@ XF86AudioLowerVolume
 
 XF86AudioMute
     ~/.local/bin/osd volume mute
+
+XF86AudioMicMute
+    ~/.local/bin/osd mic
+
+# --- Player (Spotify, navegador, mpv...) ---
+XF86Audio{Play,Pause,Next,Prev,Stop}
+    playerctl {play-pause,pause,next,previous,stop}
 
 # --- Controle de Brilho (Teclas do Notebook) ---
 XF86MonBrightnessUp

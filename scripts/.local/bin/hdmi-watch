@@ -1,10 +1,10 @@
 #!/bin/sh
 # Vigia o cabo HDMI: ao plugar abre o menu de telas, ao desplugar volta pro notebook.
-# Lê o status direto do kernel a cada 2s (custo praticamente zero).
+# Acorda só com eventos do kernel (udev, subsistema drm), sem ficar consultando.
 status() { cat /sys/class/drm/card*-HDMI-A-*/status 2>/dev/null | grep -qx connected && echo on || echo off; }
 
 last=$(status)
-while sleep 2; do
+udevadm monitor --udev --subsystem-match=drm | while read -r _; do
     now=$(status)
     [ "$now" = "$last" ] && continue
     last=$now
