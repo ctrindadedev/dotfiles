@@ -52,6 +52,10 @@ if command -v xfce4-power-manager > /dev/null; then
     pgrep -x xfce4-power-man > /dev/null || xfce4-power-manager &
 fi
 
+# Visão geral das janelas (Super + E) e gestos do touchpad (4 dedos), instalados pelo system/visao-geral.sh
+command -v skippy-xd > /dev/null && { pgrep -x skippy-xd > /dev/null || skippy-xd --start-daemon > /dev/null 2>&1 & }
+command -v libinput-gestures > /dev/null && { pgrep -f 'bin/libinput-gestures' > /dev/null || libinput-gestures > /dev/null 2>&1 & }
+
 # Histórico da área de transferência (Super + V)
 pgrep -x greenclip > /dev/null || ~/.local/bin/greenclip daemon &
 

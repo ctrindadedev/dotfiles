@@ -36,7 +36,10 @@ fi
 echo "==> zram, earlyoom e sysctl"
 sudo sh system/aplicar.sh
 
+echo "==> Visão geral das janelas e gestos do touchpad"
+sh system/visao-geral.sh
+
 echo "==> Links (stow)"
-stow --restow -t ~ bspwm dunst kitty picom polybar rofi scripts sxhkd wallpaper zsh
+stow --restow -t ~ bspwm dunst gestures kitty picom polybar rofi scripts skippy sxhkd wallpaper zsh
 
 echo "==> Pronto. Entre numa sessão bspwm (ou Super+Esc se já estiver nela)."

@@ -1,0 +1,99 @@
+# Visão geral das janelas (Super+E / 4 dedos pra cima), paleta Catppuccin Mocha igual à polybar.
+# Baseado no skippy-xd.rc padrão; mudam as cores, a fonte, os cantos e as teclas hjkl.
+[system]
+daemonPath = /tmp/skippy-xd-fifo
+clientPath = /tmp/skippy-xd-fofi
+clientList = _NET_CLIENT_LIST
+pseudoTrans = true
+
+[multimonitor]
+showOnlyCurrentMonitor = false
+showOnlyCurrentScreen = true
+horizontalPanelAlignment = mid
+verticalPanelAlignment = mid
+
+[layout]
+switchLayout = rect
+exposeLayout = cosmos
+switchWaitDuration = 100
+switchCycleDuringWait = false
+switchCycleDesktops = false
+exposeCycleDesktops = false
+distance = 50
+upscaleWindows = false
+
+[appearance]
+animationDuration = 200
+animationRefresh = 60
+background = #11111BB3
+preservePages = true
+includeFrame = true
+leftFrameBorder = 0
+topFrameBorder = 0
+cornerRadius = 12
+
+[filler]
+opacity = 160
+color = #313244
+iconPlace = top left
+iconSize = 48
+
+[livepreview]
+opacity = 255
+icon = true
+iconPlace = top left
+iconSize = 48
+
+[highlight]
+tint = #CBA6F7
+tintOpacity = 70
+tintWindow = true
+tintBorder = 6
+
+[multiselect]
+tint = #89B4FA
+tintOpacity = 196
+
+[panel]
+show = true
+backgroundTinting = true
+reserveSpace = true
+
+[desktop]
+show = true
+backgroundTinting = true
+
+[label]
+show = true
+option = windowClass
+offsetX = 0
+offsetY = -5
+width = 0.8
+border = #313244
+background = #1E1E2E
+backgroundHighlight = #CBA6F7
+opacity = 220
+text = #CDD6F4
+textOutline = #11111B
+font = Inter-11:weight=bold
+
+[bindings]
+enforceFocus = true
+pivotLockingTime = 0
+moveMouse = false
+keysUp = Up k
+keysDown = Down j
+keysLeft = Left h
+keysRight = Right l
+keysSelect = Return space
+keysCancel = Escape
+keysNext = n
+keysPrev = p
+keysIconify = 1
+keysShade = 2
+keysClose = 3
+miwMouse1 = focus
+miwMouse2 = close-ewmh
+miwMouse3 = iconify
+miwMouse4 = keysNext
+miwMouse5 = keysPrev

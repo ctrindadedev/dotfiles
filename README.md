@@ -18,6 +18,9 @@ O script instala os pacotes de `packages.txt`, baixa o greenclip e a Symbols Ner
 | Super + Enter | Terminal |
 | Super + D / Super + Espaço | Menu de apps (tema adi1090x) |
 | Alt + Tab | Alternar janelas |
+| Super + E / 4 dedos pra cima | Visão geral das janelas (Mission Control) |
+| Super + Shift + E / 4 dedos pra baixo | Visão geral dos desktops |
+| 4 dedos pros lados | Trocar de desktop |
 | Super + V | Histórico do clipboard |
 | Super + ' | Terminal suspenso |
 | Print / Super + Shift + S | Print de área |

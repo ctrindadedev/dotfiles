@@ -168,6 +168,11 @@ alias ls="eza --icons=always --group-directories-first"
 alias ll="eza -al --icons=always --group-directories-first --git"
 alias tree="eza --tree --icons=always"
 
+# Projeto MEC no Docker, de qualquer pasta (o compose precisa do .env da API). Volumes ficam intactos no down
+MEC_DIR="$HOME/dev/software_development/work/Projeto_MEC/mec-monorepo"
+mec-up()   { (cd "$MEC_DIR" && docker compose --env-file apps/api/.env up -d db minio redis "$@") }
+mec-down() { (cd "$MEC_DIR" && docker compose --env-file apps/api/.env down "$@") }
+
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion

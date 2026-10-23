@@ -193,6 +193,10 @@ super + ctrl + q
 super + apostrophe
     ~/.local/bin/scratch
 
+# Visão geral estilo Mission Control: todas as janelas / todos os desktops (aperte de novo pra fechar)
+super + {_,shift + }e
+    skippy-xd --{expose,paging} --toggle --wm-class '!scratchpad'
+
 # Alternar janelas: segure Alt e aperte Tab, solte Alt pra escolher
 alt + Tab
     ~/.local/bin/window-switch
