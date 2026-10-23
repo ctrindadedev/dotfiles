@@ -55,6 +55,8 @@ pgrep -x greenclip > /dev/null || ~/.local/bin/greenclip daemon &
 
 # Bloqueio automático: ao suspender/fechar a tampa e após 10 min parado
 xset s 600 600
+# Desliga o monitor de verdade 5 min depois do bloqueio (economiza bateria)
+xset +dpms dpms 0 0 900
 command -v xss-lock > /dev/null && { pgrep -x xss-lock > /dev/null || xss-lock --transfer-sleep-lock -- ~/.local/bin/lock & }
 
 # 5. Polybar: iniciada pelo display-menu --fix acima

@@ -155,7 +155,7 @@ XF86MonBrightnessDown
 
 # --- Filtro de Luz Azul (Super + N de "Night") ---
 super + n
-    sh -c 'if pgrep -x redshift > /dev/null; then killall -q redshift; sleep 0.2; redshift -x; else redshift -l -5.79:-35.20 -t 3500:3500 -r & fi'
+    ~/.local/bin/night
 
 # Menu de telas (tecla de projetor do notebook ou Super + F9)
 {XF86Display,super + F9}

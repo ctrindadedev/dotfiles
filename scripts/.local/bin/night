@@ -1,0 +1,12 @@
+#!/bin/sh
+# Luz noturna (Super + N): cor fixa 3500K, sem deixar processo rodando
+state="${XDG_RUNTIME_DIR:-/tmp}/night-on"
+if [ -e "$state" ]; then
+    redshift -x >/dev/null 2>&1
+    rm -f "$state"
+    notify-send -u low -i redshift-status-off -h string:x-dunst-stack-tag:osd "Luz noturna desligada" "" 2>/dev/null
+else
+    redshift -P -O 3500 >/dev/null 2>&1
+    touch "$state"
+    notify-send -u low -i redshift-status-on -h string:x-dunst-stack-tag:osd "Luz noturna ligada" "" 2>/dev/null
+fi

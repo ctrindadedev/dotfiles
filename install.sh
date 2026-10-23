@@ -34,6 +34,6 @@ if [ ! -f "$wall" ]; then
 fi
 
 echo "==> Links (stow)"
-stow --restow -t ~ bspwm dunst picom polybar rofi scripts sxhkd wallpaper zsh
+stow --restow -t ~ bspwm dunst kitty picom polybar rofi scripts sxhkd wallpaper zsh
 
 echo "==> Pronto. Entre numa sessão bspwm (ou Super+Esc se já estiver nela)."
