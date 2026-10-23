@@ -161,3 +161,31 @@ super + F7
 # Estender Telas (Universal - Joga o HDMI para a direita automaticamente)
 super + F8
     ~/.local/bin/display-menu extend
+
+# ==========================================
+# PRODUTIVIDADE
+# ==========================================
+
+# Print: seleciona uma área (Enter/Ctrl+C copia, Ctrl+S salva)
+{Print,super + shift + s}
+    flameshot gui
+
+# Print da tela inteira direto pra pasta de imagens
+shift + Print
+    flameshot full -p ~/Imagens
+
+# Histórico da área de transferência
+super + v
+    ~/.local/bin/clip-menu
+
+# Bloquear tela (igual ao Ctrl+Cmd+Q do Mac)
+super + ctrl + q
+    ~/.local/bin/lock
+
+# Terminal suspenso (mostra/esconde)
+super + apostrophe
+    ~/.local/bin/scratch
+
+# Alternar janelas: segure Alt e aperte Tab, solte Alt pra escolher
+alt + Tab
+    ~/.local/bin/window-switch

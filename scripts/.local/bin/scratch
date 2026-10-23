@@ -1,0 +1,17 @@
+#!/bin/sh
+# Terminal suspenso: mostra/esconde um kitty flutuante no topo (Super + ')
+id=""
+for n in $(bspc query -N -n .window); do
+    bspc query -T -n "$n" | grep -q '"className":"scratchpad"' && { id=$n; break; }
+done
+if [ -z "$id" ]; then
+    kitty --class scratchpad --name scratchpad >/dev/null 2>&1 &
+    exit 0
+fi
+# Traz pro desktop atual e alterna visibilidade
+bspc node "$id" -d focused 2>/dev/null
+if bspc query -N -n "$id.hidden" >/dev/null 2>&1; then
+    bspc node "$id" -g hidden=off -f
+else
+    bspc node "$id" -g hidden=on
+fi

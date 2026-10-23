@@ -1,0 +1,6 @@
+#!/bin/sh
+# Alt+Tab: segure Alt, aperte Tab pra descer, solte Alt pra escolher
+rofi -show window -theme ~/.config/rofi/spotlight.rasi -window-format '{c}  ·  {t}' \
+    -theme-str 'entry { placeholder: "Janelas"; }' \
+    -kb-accept-entry '!Alt-Tab,!Alt+Alt_L,Return,KP_Enter' \
+    -kb-row-down 'Alt+Tab,Down' -kb-row-up 'Alt+ISO_Left_Tab,Up' -kb-cancel 'Escape'

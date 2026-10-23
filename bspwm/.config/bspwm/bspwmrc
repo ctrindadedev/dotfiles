@@ -45,6 +45,13 @@ if command -v xfce4-power-manager > /dev/null; then
     pgrep -x xfce4-power-man > /dev/null || xfce4-power-manager &
 fi
 
+# Histórico da área de transferência (Super + V)
+pgrep -x greenclip > /dev/null || ~/.local/bin/greenclip daemon &
+
+# Bloqueio automático: ao suspender/fechar a tampa e após 10 min parado
+xset s 600 600
+command -v xss-lock > /dev/null && { pgrep -x xss-lock > /dev/null || xss-lock --transfer-sleep-lock -- ~/.local/bin/lock & }
+
 # 5. Polybar: iniciada pelo display-menu --fix acima
 
 # 6. Picom (Transparências e Bordas)
@@ -55,7 +62,7 @@ picom -b &
 ~/.local/bin/dock
 
 # 7. Wallpaper (Imagem estática)
-feh --bg-fill ~/Downloads/Wallpapers/drag_walp.jpg &
+feh --bg-fill ~/.local/share/wallpapers/silk.png &
 
 # Regras (remove as antigas primeiro pra não acumular a cada reload)
 bspc rule -r '*'
@@ -63,3 +70,4 @@ bspc rule -a Steam state=floating
 bspc rule -a "steam_app_*" state=fullscreen
 bspc rule -a "gamescope" state=fullscreen
 bspc rule -a Plank manage=off border=off
+bspc rule -a '*:scratchpad' state=floating sticky=on rectangle=1100x560+410+40

@@ -1,0 +1,9 @@
+#!/bin/sh
+# Tela de bloqueio com o wallpaper. Pausa as notificações enquanto bloqueado
+# (pra não aparecer mensagem de ninguém por cima da tela bloqueada).
+command -v i3lock >/dev/null || { notify-send -u critical "Bloqueio" "i3lock não instalado"; exit 1; }
+pgrep -x i3lock >/dev/null && exit 0
+dunstctl set-paused true 2>/dev/null
+i3lock --nofork --show-failed-attempts --ignore-empty-password --tiling \
+    --color=11111B --image="$HOME/.local/share/wallpapers/silk-lock.png"
+dunstctl set-paused false 2>/dev/null

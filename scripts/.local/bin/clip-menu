@@ -1,0 +1,4 @@
+#!/bin/sh
+# Histórico da área de transferência (Super + V)
+rofi -modi "clipboard:greenclip print" -show clipboard -run-command '{cmd}' \
+    -theme ~/.config/rofi/spotlight.rasi -theme-str 'entry { placeholder: "Área de transferência"; }'
