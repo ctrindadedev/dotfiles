@@ -9,6 +9,7 @@ dunst
 libnotify-bin
 feh
 plank
+xdo
 kitty
 stow
 x11-xserver-utils

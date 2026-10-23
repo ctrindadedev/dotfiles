@@ -14,3 +14,5 @@ $s theme 'Transparent'
 $s show-dock-item false
 $s monitor ''
 pgrep -x plank >/dev/null || plank >/dev/null 2>&1 &
+# Sem isso o bspwm empilha as janelas por cima do dock
+pgrep -x dock-raise >/dev/null || ~/.local/bin/dock-raise >/dev/null 2>&1 &

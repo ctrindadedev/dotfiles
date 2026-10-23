@@ -1,0 +1,8 @@
+#!/bin/sh
+# Mantém o Plank na frente das janelas. Ele não é gerenciado pelo bspwm (manage=off), então a cada foco/janela
+# nova o bspwm empilha as janelas por cima e o dock aparecia atrás delas ao passar o mouse.
+# Em tela cheia (jogo, vídeo) não levanta, igual ao Mac.
+command -v xdo > /dev/null || exit 0
+bspc subscribe node_add node_remove node_stack node_focus node_state desktop_focus | while read -r _; do
+    bspc query -N -n focused.fullscreen > /dev/null 2>&1 || xdo raise -N Plank
+done
