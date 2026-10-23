@@ -1,0 +1,6 @@
+# /etc/default/zramswap: swap comprimido na RAM (zram-tools)
+# zstd comprime ~3x, então 50% da RAM (~8 GB) de zram rende uns 4-6 GB extras na prática
+ALGO=zstd
+PERCENT=50
+# Bem acima do /swapfile (-2), que fica só de reserva
+PRIORITY=100

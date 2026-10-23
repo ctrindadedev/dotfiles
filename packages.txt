@@ -38,3 +38,7 @@ python3-numpy
 python3-pil
 curl
 unzip
+
+# Memória (configurados pelo system/aplicar.sh)
+zram-tools
+earlyoom

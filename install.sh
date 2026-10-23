@@ -33,6 +33,9 @@ if [ ! -f "$wall" ]; then
     python3 extras/wallgen.py "$wall"
 fi
 
+echo "==> zram, earlyoom e sysctl"
+sudo sh system/aplicar.sh
+
 echo "==> Links (stow)"
 stow --restow -t ~ bspwm dunst kitty picom polybar rofi scripts sxhkd wallpaper zsh
 

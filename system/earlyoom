@@ -1,0 +1,5 @@
+# /etc/default/earlyoom: fecha o maior processo antes do notebook congelar
+# Age só com menos de 4% de RAM E menos de 10% de swap livres.
+# Prefere matar o Chrome (uma aba cai, o resto segue); evita a sessão gráfica, o kitty e as IDEs JetBrains
+# Sem aspas internas: o systemd não processa aspas dentro da variável
+EARLYOOM_ARGS="-r 3600 -m 4 -s 10 --prefer (^|/)(chrome|chromium)$ --avoid (^|/)(Xorg|bspwm|sxhkd|polybar|picom|dunst|kitty|java|idea|webstorm|goland)$"
