@@ -18,7 +18,6 @@ i3lock
 
 # Bandeja, energia e permissões
 network-manager-gnome
-pasystray
 xfce4-power-manager
 xfconf
 policykit-1-gnome

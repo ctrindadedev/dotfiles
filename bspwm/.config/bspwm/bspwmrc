@@ -33,11 +33,13 @@ bspc config borderless_monocle   true
 bspc config gapless_monocle      true
 
 # 4. Bandeja do Sistema e daemons
+# Som fica no ícone da polybar (clique direito abre o pavucontrol), sem o pasystray duplicado
 killall -q nm-applet flameshot pasystray
+# IBus continua ativo (acentos), só sem o ícone "pt" na bandeja
+gsettings set org.freedesktop.ibus.panel show-icon-on-systray false 2>/dev/null
 pgrep -f polkit-gnome-authentication-agent-1 > /dev/null || /usr/lib/policykit-1-gnome/polkit-gnome-authentication-agent-1 &
 nm-applet &
 flameshot &
-pasystray &
 
 # Notificações (sem isso nenhum aviso aparece na tela)
 command -v dunst > /dev/null && { pgrep -x dunst > /dev/null || dunst & }
