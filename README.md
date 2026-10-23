@@ -1,6 +1,6 @@
 # meus-dotfiles
 
-bspwm com visual estilo macOS (polybar como menubar, Plank como dock, rofi como Spotlight), paleta Catppuccin Mocha.
+bspwm com visual estilo macOS (polybar como menubar, Plank como dock, rofi como lançador), paleta Catppuccin Mocha.
 
 ## Instalar
 
@@ -16,15 +16,14 @@ O script instala os pacotes de `packages.txt`, baixa o greenclip e a Symbols Ner
 | Tecla | Ação |
 |---|---|
 | Super + Enter | Terminal |
-| Super + Espaço | Busca de apps |
-| Super + D | Menu de apps (tema adi1090x) |
+| Super + D / Super + Espaço | Menu de apps (tema adi1090x) |
 | Alt + Tab | Alternar janelas |
 | Super + V | Histórico do clipboard |
 | Super + ' | Terminal suspenso |
 | Print / Super + Shift + S | Print de área |
 | Shift + Print | Print da tela inteira |
 | Super + Ctrl + Q | Bloquear tela |
-| Super + N | Luz noturna |
+| Super + N | Luz noturna (liga/desliga) |
 | Super + F9 / tecla de projetor | Menu de telas |
 | Super + Esc | Recarregar bspwm e atalhos |
 | Super + 1…0 | Desktops (1-5 notebook, 6-10 HDMI) |
