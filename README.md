@@ -9,7 +9,11 @@ git clone <este repo> ~/meus-dotfiles
 ~/meus-dotfiles/install.sh
 ```
 
-O script instala os pacotes de `packages.txt`, baixa o greenclip e a Symbols Nerd Font, gera o wallpaper (`extras/wallgen.py`) e cria os links com `stow`.
+No Ubuntu com GNOME (Wayland): rode o script, saia da sessão e na tela de login clique na engrenagem e escolha **bspwm**. O GNOME continua disponível como reserva.
+
+Configurações só de uma máquina (trabalho, tokens, PATHs extras) vão em `~/.zshrc.local`, que o `.zshrc` carrega se existir e que não fica no git.
+
+O script instala os pacotes de `packages.txt`, instala zsh + oh-my-zsh + spaceship + plugins (e troca o shell padrão), baixa o greenclip e a Symbols Nerd Font, gera o wallpaper (`extras/wallgen.py`) e cria os links com `stow`.
 
 ## Atalhos principais
 

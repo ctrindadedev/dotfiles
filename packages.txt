@@ -1,4 +1,9 @@
 # Pacotes do apt (Linux Mint 22 / Ubuntu 24.04). Lidos pelo install.sh
+# Shell
+zsh
+eza
+git
+
 # Base
 bspwm
 sxhkd

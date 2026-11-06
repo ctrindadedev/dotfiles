@@ -86,8 +86,11 @@ source $ZSH/oh-my-zsh.sh
 # User configuration
 
 # export MANPATH="/usr/local/man:$MANPATH"
-export PATH=$PATH:$(go env GOPATH)/bin
-export PATH=$PATH:$(go env GOROOT)/bin
+export PATH="$HOME/.local/bin:$PATH"
+if command -v go >/dev/null; then
+  export PATH=$PATH:$(go env GOPATH)/bin
+  export PATH=$PATH:$(go env GOROOT)/bin
+fi
 
 # You may need to manually set your language environment
 # export LANG=en_US.UTF-8
@@ -164,14 +167,18 @@ SPACESHIP_PYTHON_SYMBOL="py "
 SPACESHIP_JAVA_SYMBOL="java "
 
 
+if command -v eza >/dev/null; then
 alias ls="eza --icons=always --group-directories-first"
 alias ll="eza -al --icons=always --group-directories-first --git"
 alias tree="eza --tree --icons=always"
+fi
 
 # Projeto MEC no Docker, de qualquer pasta (o compose precisa do .env da API). Volumes ficam intactos no down
 MEC_DIR="$HOME/dev/software_development/work/Projeto_MEC/mec-monorepo"
+if [ -d "$MEC_DIR" ]; then
 mec-up()   { (cd "$MEC_DIR" && docker compose --env-file apps/api/.env up -d db minio redis "$@") }
 mec-down() { (cd "$MEC_DIR" && docker compose --env-file apps/api/.env down "$@") }
+fi
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
@@ -180,4 +187,7 @@ export NVM_DIR="$HOME/.nvm"
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="$HOME/.sdkman"
 [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
-eval "$(/home/caiotrindade/.local/bin/mise activate zsh)"
+command -v mise >/dev/null && eval "$(mise activate zsh)"
+
+# Coisas só desta máquina (trabalho, tokens, PATHs extras). Não versionado
+[ -f "$HOME/.zshrc.local" ] && source "$HOME/.zshrc.local"

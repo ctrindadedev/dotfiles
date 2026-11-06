@@ -1,5 +1,6 @@
 #!/bin/sh
 # Instala tudo numa máquina nova (Linux Mint 22 / Ubuntu 24.04). Pode rodar de novo sem problema.
+# No Ubuntu com GNOME: depois de rodar, saia e escolha "bspwm" na engrenagem da tela de login (o GNOME continua lá).
 set -e
 cd "$(dirname "$0")"
 
@@ -31,6 +32,29 @@ wall=wallpaper/.local/share/wallpapers/silk.png
 if [ ! -f "$wall" ]; then
     echo "==> Gerando wallpaper"
     python3 extras/wallgen.py "$wall"
+fi
+
+# Shell: oh-my-zsh + spaceship + plugins (o .zshrc do repo depende deles)
+if [ ! -d ~/.oh-my-zsh ]; then
+    echo "==> oh-my-zsh"
+    RUNZSH=no CHSH=no KEEP_ZSHRC=yes sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+fi
+custom=${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}
+for repo in zsh-users/zsh-autosuggestions zsh-users/zsh-syntax-highlighting; do
+    d="$custom/plugins/${repo#*/}"
+    [ -d "$d" ] || git clone -q --depth 1 "https://github.com/$repo.git" "$d"
+done
+if [ ! -d "$custom/themes/spaceship-prompt" ]; then
+    git clone -q --depth 1 https://github.com/spaceship-prompt/spaceship-prompt.git "$custom/themes/spaceship-prompt"
+    ln -sf "$custom/themes/spaceship-prompt/spaceship.zsh-theme" "$custom/themes/spaceship.zsh-theme"
+fi
+# O instalador do oh-my-zsh cria um ~/.zshrc próprio; tira do caminho pro stow
+if [ -f ~/.zshrc ] && [ ! -L ~/.zshrc ]; then
+    mv ~/.zshrc ~/.zshrc.pre-dotfiles
+fi
+if [ "$(getent passwd "$USER" | cut -d: -f7)" != "$(command -v zsh)" ]; then
+    echo "==> zsh como shell padrão"
+    chsh -s "$(command -v zsh)"
 fi
 
 echo "==> zram, earlyoom e sysctl"
