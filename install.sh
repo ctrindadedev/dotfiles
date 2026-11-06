@@ -55,6 +55,7 @@ fonte() {
 # Wallpaper e tela de bloqueio (gerados, não ficam no git)
 wallpaper() {
     wall=wallpaper/.local/share/wallpapers/silk.png
+    mkdir -p "$(dirname "$wall")"
     [ -f "$wall" ] || python3 extras/wallgen.py "$wall"
 }
 

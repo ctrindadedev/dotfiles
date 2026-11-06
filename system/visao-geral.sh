@@ -8,7 +8,7 @@ set -e
 sudo apt install -y meson ninja-build cmake pkg-config git \
     libx11-dev libxcomposite-dev libxdamage-dev libxext-dev libxfixes-dev libxft-dev libxrender-dev \
     libxinerama-dev libxi-dev libgif-dev libjpeg-dev libpng-dev libchipmunk-dev \
-    libinput-tools wmctrl
+    libxrandr-dev libinput-tools wmctrl
 # Ler os eventos do touchpad exige o grupo input (vale depois de sair e entrar na sessão)
 sudo usermod -aG input "$USER"
 
