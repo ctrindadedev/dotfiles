@@ -79,6 +79,13 @@ shell_zsh() {
     fi
 }
 
+# A polybar usa locale pt_BR (data em português). Ubuntu instalado em inglês não tem esse locale
+# gerado, e aí os módulos de RAM, bateria e data/hora somem da barra
+locale_ptbr() {
+    locale -a | grep -qi '^pt_BR\.utf-\?8$' && return 0
+    sudo locale-gen pt_BR.UTF-8
+}
+
 sistema()     { sudo sh system/aplicar.sh; }
 visao_geral() { sh system/visao-geral.sh; }
 
@@ -105,6 +112,7 @@ etapa "greenclip"                              greenclip
 etapa "Symbols Nerd Font"                      fonte
 etapa "Wallpaper"                              wallpaper
 etapa "zsh + oh-my-zsh + spaceship"            shell_zsh
+etapa "Locale pt_BR (polybar)"                  locale_ptbr
 etapa "Links das configs (stow)"               links
 etapa "zram, earlyoom e sysctl"                sistema
 etapa "Visão geral das janelas (skippy-xd)"    visao_geral

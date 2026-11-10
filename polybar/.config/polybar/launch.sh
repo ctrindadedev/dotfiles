@@ -6,6 +6,14 @@ killall -q polybar
 for _ in $(seq 10); do pgrep -u $UID -x polybar >/dev/null || break; sleep 0.2; done
 killall -q -9 polybar
 
+# Nome da bateria/carregador muda de notebook pra notebook (BAT0/BAT1, AC0/ADP0/ACAD...)
+for d in /sys/class/power_supply/*; do
+    case $(cat "$d/type" 2>/dev/null) in
+        Battery) [ -n "$BATTERY" ] || export BATTERY=${d##*/} ;;
+        Mains)   [ -n "$ADAPTER" ] || export ADAPTER=${d##*/} ;;
+    esac
+done
+
 primary=$(xrandr --query | awk '/ primary/{print $1}')
 # No espelhamento os monitores ficam na mesma posição: uma barra só, a do principal
 monitors=$(polybar --list-monitors | sort -t'(' -k2r |
